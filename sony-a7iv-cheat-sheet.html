@@ -1,0 +1,715 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>a7 IV Field Card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#f3f4f2; --panel:#ffffff; --ink:#1b1e1d; --muted:#5c6360; --line:#d9ddda;
+  --accent:#c2410c; --accent-soft:#fbe7dc; --good:#15803d; --warn:#b45309; --bad:#b91c1c;
+  --chip:#eceeec; --code:#f0f1ef;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#141615; --panel:#1c1f1e; --ink:#e8ebe9; --muted:#9aa29e; --line:#2e3331;
+    --accent:#fb8a4c; --accent-soft:#3a2418; --good:#4ade80; --warn:#fbbf24; --bad:#f87171;
+    --chip:#262a28; --code:#232725;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#141615; --panel:#1c1f1e; --ink:#e8ebe9; --muted:#9aa29e; --line:#2e3331;
+  --accent:#fb8a4c; --accent-soft:#3a2418; --good:#4ade80; --warn:#fbbf24; --bad:#f87171;
+  --chip:#262a28; --code:#232725;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--body);margin:0}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:16px;padding-block:28px 64px}
+header.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;border-bottom:3px solid var(--ink);padding-bottom:14px}
+h1{font:700 clamp(40px,8vw,68px)/.9 var(--display);letter-spacing:.01em;margin:0;text-transform:uppercase}
+h1 span{color:var(--accent)}
+.sub{color:var(--muted);max-width:46ch;margin:6px 0 0}
+.spec{font:500 12px/1.6 var(--mono);color:var(--muted);text-align:right}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:6px;overflow-x:auto;padding-block:10px;border-bottom:1px solid var(--line);scrollbar-width:thin}
+nav.toc a{flex:none;font:600 13px/1 var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--ink);text-decoration:none;padding:8px 10px;border:1px solid var(--line);border-radius:3px;background:var(--panel)}
+nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--accent);color:var(--accent);outline:none}
+section{padding-top:34px;scroll-margin-top:56px}
+h2{font:700 30px/1 var(--display);text-transform:uppercase;letter-spacing:.02em;margin:0 0 4px;display:flex;align-items:baseline;gap:10px;text-wrap:balance}
+h2 .k{font:500 13px var(--mono);color:var(--accent);letter-spacing:0}
+.lede{color:var(--muted);margin:0 0 16px;max-width:70ch}
+h3{font:600 19px/1.2 var(--display);text-transform:uppercase;letter-spacing:.05em;margin:0 0 8px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:16px}
+.tbl{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:4px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:14px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 12px/1.2 var(--display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:var(--chip)}
+tr:last-child td{border-bottom:0}
+td.n,.mono{font-family:var(--mono);font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap}
+td b{font-weight:600}
+ul.list{margin:0;padding-left:18px;display:grid;gap:6px}
+.path{font:500 12.5px/1.5 var(--mono);background:var(--code);padding:1px 6px;border-radius:3px;white-space:normal;word-break:break-word}
+.kbd{display:inline-block;font:600 11.5px/1 var(--mono);border:1px solid var(--line);border-bottom-width:2px;padding:3px 6px;border-radius:3px;background:var(--panel)}
+.tag{display:inline-block;font:600 11px/1 var(--mono);padding:4px 6px;border-radius:3px;background:var(--accent-soft);color:var(--accent)}
+.callout{border-left:4px solid var(--accent);background:var(--accent-soft);padding:12px 14px;border-radius:0 4px 4px 0;margin-top:14px}
+.callout p{margin:0}
+/* exposure scale */
+.scale{display:grid;gap:12px}
+.scale .row{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:12px 14px}
+.scale .hd{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.stops{display:flex;gap:4px;overflow-x:auto;padding-bottom:2px}
+.stops span{flex:1 0 auto;min-width:52px;text-align:center;font:500 12.5px/1 var(--mono);padding:8px 4px;background:var(--chip);border-radius:3px}
+.stops span.hi{background:var(--accent);color:var(--panel)}
+.ends{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);margin-top:6px;gap:8px}
+/* body map */
+.map{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+dl.ctrl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 12px;align-items:baseline}
+dl.ctrl dt{font:600 12px/1.3 var(--mono);color:var(--accent);white-space:nowrap}
+dl.ctrl dd{margin:0}
+.ok{color:var(--good);font-weight:600}.no{color:var(--bad);font-weight:600}
+footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+a{color:var(--accent)}
+/* exposure balancer */
+.lab{margin-top:16px;background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:4px;padding:16px}
+.lab-head p{margin:0 0 14px;color:var(--muted);max-width:72ch}
+.lab-body{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:start}
+.pv{border-radius:4px;overflow:hidden;border:1px solid var(--line)}
+.pv-scene{position:relative;aspect-ratio:4/3;max-width:100%;overflow:hidden;background:#1d2a3a;transition:filter .25s}
+.pv-bg{position:absolute;inset:0;background:linear-gradient(#27405e,#6e7fa0 55%,#caa27c);transition:filter .25s}
+.pv-bg .bk{position:absolute;border-radius:50%;opacity:.9;box-shadow:0 0 12px rgba(255,220,150,.7)}
+.pv-bg .bld{position:absolute;bottom:22%;background:#1f2633;border-radius:2px 2px 0 0}
+.pv-ground{position:absolute;left:0;right:0;bottom:0;height:22%;background:#4b4a3f}
+.pv-person{position:absolute;left:50%;bottom:0;width:30%;transform:translateX(-50%)}
+.pv-ball{position:absolute;bottom:26%;left:8%;height:18px;border-radius:9px;background:linear-gradient(90deg,rgba(230,70,40,0),rgba(230,70,40,.85) 70%,#e64628);transition:width .25s}
+.pv-grain{position:absolute;inset:0;pointer-events:none;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");transition:opacity .25s}
+.pv-legend{display:flex;flex-wrap:wrap;gap:4px 12px;padding:8px 10px;font:500 11.5px/1.3 var(--mono);color:var(--muted);background:var(--chip)}
+.meter{margin-top:12px}
+.meter-scale{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;font:500 12px var(--mono);color:var(--muted)}
+.meter-scale .z{color:var(--ink);font-weight:600}
+.meter-track{position:relative;height:12px;margin:4px calc(100%/14);background:repeating-linear-gradient(90deg,var(--line) 0 2px,transparent 2px calc(100%/6 - .1px)),var(--chip);border-radius:2px}
+.meter-needle{position:absolute;top:-4px;width:4px;height:20px;margin-left:-2px;background:var(--accent);border-radius:2px;left:50%;transition:left .25s}
+.meter-read{display:flex;justify-content:space-between;gap:8px;margin-top:6px;font-size:13px;color:var(--muted)}
+.meter-read b{color:var(--ink);font-family:var(--mono);font-weight:500}
+.meter-read b.off{color:var(--warn)}
+fieldset.mode{border:0;margin:0 0 12px;padding:0;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+fieldset.mode legend{float:left;font:600 12px var(--display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-right:6px;padding:0}
+fieldset.mode label{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border:1px solid var(--line);border-radius:3px;cursor:pointer;font-weight:500}
+fieldset.mode label:has(input:checked){border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+fieldset.mode input{accent-color:var(--accent);margin:0}
+.sl{padding:10px 0;border-top:1px solid var(--line)}
+.sl.auto .sl-top label::after{content:"AUTO";margin-left:8px;font:600 10.5px var(--mono);padding:2px 5px;border-radius:3px;background:var(--accent);color:var(--panel);vertical-align:2px}
+.sl-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.sl-top label{font:600 16px var(--display);letter-spacing:.06em;text-transform:uppercase}
+.sl-top output{font:600 24px/1 var(--mono);font-variant-numeric:tabular-nums}
+.sl.flash output{color:var(--accent)}
+.sl input[type=range]{width:100%;accent-color:var(--accent);margin:8px 0 2px}
+.sl-ends{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--muted)}
+.msg{margin-top:10px;padding:10px 12px;background:var(--code);border-radius:4px;font-size:14px;min-height:44px}
+.warn{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.warn li{font-size:12.5px;padding:4px 8px;border-radius:3px;border:1px solid var(--line)}
+.warn li.w{border-color:var(--warn);color:var(--warn)}
+.warn li.g{border-color:var(--good);color:var(--good)}
+.eq{margin-top:12px}
+.eq-h{font:600 12px var(--display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.eq-list{display:flex;flex-wrap:wrap;gap:6px}
+.eq-list button,.btns button{font:500 12.5px var(--mono);padding:6px 8px;border:1px solid var(--line);border-radius:3px;background:var(--panel);color:var(--ink);cursor:pointer}
+.eq-list button.cur{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.eq-list button:hover,.btns button:hover,.eq-list button:focus-visible,.btns button:focus-visible{border-color:var(--accent);outline:none}
+.btns{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:14px}
+.btns-l{font-size:12.5px;color:var(--muted)}
+.btns button{font-family:var(--body)}
+.btns button.alt{border-color:var(--accent);color:var(--accent)}
+.rules{display:grid;gap:6px 18px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-top:16px;padding-top:12px;border-top:1px dashed var(--line);font-size:13.5px}
+@media (max-width:520px){ .spec{text-align:left} h2{font-size:26px} }
+@media (prefers-reduced-motion:no-preference){ html{scroll-behavior:smooth} }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header class="top">
+  <div>
+    <h1>a7 IV <span>Field Card</span></h1>
+    <p class="sub">Everything you need while holding the camera: controls, settings recipes, menu paths and quick fixes. Set up for shooting in India (50Hz power, PAL video).</p>
+  </div>
+  <div class="spec">ILCE-7M4 · 33MP full frame<br>10 fps · 4K 60p · 5-axis IBIS<br>Battery NP-FZ100</div>
+</header>
+
+<nav class="toc" aria-label="Sections">
+  <a href="#controls">Controls</a><a href="#setup">First setup</a><a href="#triangle">Exposure</a><a href="#recipes">Photo recipes</a><a href="#focus">Focus</a><a href="#wb">Colour &amp; WB</a><a href="#video">Video</a><a href="#flicker">Flicker</a><a href="#menus">Menu paths</a><a href="#fix">Troubleshoot</a><a href="#care">Battery &amp; cards</a>
+</nav>
+
+<!-- CONTROLS -->
+<section id="controls">
+  <h2>Controls <span class="k">body map</span></h2>
+  <p class="lede">What each dial and button does out of the box. Almost every button can be reassigned (see Menu paths).</p>
+  <div class="map">
+    <div class="card"><h3>Top plate</h3>
+      <dl class="ctrl">
+        <dt>Mode dial</dt><dd>AUTO, P, A, S, M, and custom memories 1–3. Start in <b>A</b>.</dd>
+        <dt>Switch under dial</dt><dd>Stills / Movie / S&amp;Q (slow &amp; quick motion). Each keeps its own settings.</dd>
+        <dt>Rear dial R</dt><dd>The unmarked dial on the top-right. Exposure compensation by default (+ brighter, − darker).</dd>
+        <dt>Front dial</dt><dd>In A mode: aperture. In S: shutter speed. In M: aperture.</dd>
+        <dt>Shutter</dt><dd>Half-press = focus &amp; meter. Full press = shoot. Collar = power switch.</dd>
+        <dt>Red button</dt><dd>Start / stop video recording (works in any mode).</dd>
+        <dt>C1 · C2</dt><dd>Custom buttons on top. Good homes for White Balance and Focus Mode.</dd>
+      </dl>
+    </div>
+    <div class="card"><h3>Back</h3>
+      <dl class="ctrl">
+        <dt>MENU</dt><dd>Full menu. Tabs run left to right: Main, Shooting, Exposure/Color, Focus, Playback, Network, Setup, My Menu.</dd>
+        <dt>Fn</dt><dd>Quick menu of 12 common settings. Use this most of the time.</dd>
+        <dt>AF-ON</dt><dd>Focus with your thumb (back-button focus). Great for moving subjects.</dd>
+        <dt>Joystick</dt><dd>Move the focus point. Press in to re-centre it.</dd>
+        <dt>Rear dial L</dt><dd>In M mode: shutter speed.</dd>
+        <dt>Control wheel</dt><dd>Turn: ISO (in M). Edges: DISP, ISO, drive mode, and C4 by default. Centre: OK.</dd>
+        <dt>▶ Playback</dt><dd>Review photos. Turn the wheel to browse, rear dial to zoom.</dd>
+        <dt>🗑 / C3</dt><dd>Delete in playback; custom button while shooting.</dd>
+      </dl>
+    </div>
+    <div class="card"><h3>Sides &amp; ports</h3>
+      <dl class="ctrl">
+        <dt>Right door</dt><dd>Two card slots. <b>Slot 1</b> takes SD or CFexpress Type A. Slot 2 is SD only.</dd>
+        <dt>Left doors</dt><dd>Mic in, headphone out, full-size HDMI, USB-C (charge + fast transfer), Micro-USB.</dd>
+        <dt>Screen</dt><dd>Flips out and rotates for selfies, vlogging, low and high angles.</dd>
+        <dt>Eye sensor</dt><dd>Switches between the viewfinder and screen automatically.</dd>
+        <dt>Lens release</dt><dd>Button beside the mount. Hold it and twist the lens anticlockwise.</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- SETUP -->
+<section id="setup">
+  <h2>First setup <span class="k">do once</span></h2>
+  <p class="lede">A good baseline for most people. Change any of it later once you know what you like.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Setting</th><th>Set to</th><th>Where</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td><b>NTSC/PAL</b></td><td class="mono">PAL</td><td><span class="path">Setup → Area/Date → NTSC/PAL Selector</span></td><td>Matches Indian 50Hz power; stops video flicker.</td></tr>
+      <tr><td><b>Date, time, area</b></td><td class="mono">India, GMT+5:30</td><td><span class="path">Setup → Area/Date</span></td><td>Correct timestamps on files.</td></tr>
+      <tr><td><b>Format card</b></td><td class="mono">Every new card</td><td><span class="path">Main → Format</span> or <span class="path">Setup → Media → Format</span></td><td>Prevents card errors. Erases everything.</td></tr>
+      <tr><td><b>File format</b></td><td class="mono">RAW &amp; JPEG</td><td><span class="path">Shooting → Image Quality → File Format</span></td><td>JPEG to share now, RAW to edit later.</td></tr>
+      <tr><td><b>RAW type</b></td><td class="mono">Lossless Comp (M/L)</td><td><span class="path">Shooting → Image Quality → RAW File Type</span></td><td>Smaller files, no quality loss.</td></tr>
+      <tr><td><b>Focus mode</b></td><td class="mono">AF-C</td><td><span class="path">Focus → AF/MF → Focus Mode</span></td><td>Keeps focusing on moving subjects.</td></tr>
+      <tr><td><b>Subject recognition</b></td><td class="mono">On · Human</td><td><span class="path">Focus → Subject Recog.</span></td><td>Locks onto eyes automatically.</td></tr>
+      <tr><td><b>ISO</b></td><td class="mono">AUTO, max 12800</td><td><span class="path">Exposure/Color → Exposure → ISO</span></td><td>Camera handles brightness; noise stays acceptable.</td></tr>
+      <tr><td><b>Auto ISO min shutter</b></td><td class="mono">Faster (or 1/125)</td><td><span class="path">Exposure/Color → Exposure → ISO AUTO Min. SS</span></td><td>Avoids blurry shots in dim light.</td></tr>
+      <tr><td><b>SteadyShot</b></td><td class="mono">On</td><td><span class="path">Shooting → Image Stabilization</span></td><td>Sharper handheld shots. Turn off on a tripod.</td></tr>
+      <tr><td><b>Release w/o card</b></td><td class="mono">Disable</td><td><span class="path">Setup → Operation Customize</span> / <span class="path">Shooting → Shutter</span></td><td>Won't let you "shoot" with no card in.</td></tr>
+      <tr><td><b>Grid lines</b></td><td class="mono">Rule of 3rds</td><td><span class="path">Setup → Display Option → Grid Line</span></td><td>Helps straight horizons and composition.</td></tr>
+      <tr><td><b>Copyright</b></td><td class="mono">Your name</td><td><span class="path">Setup → Setup Option → Copyright Info</span></td><td>Your name is embedded in every file.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- EXPOSURE -->
+<section id="triangle">
+  <h2>Exposure triangle <span class="k">light in</span></h2>
+  <p class="lede">Three settings control brightness. Each step to the right lets in <b>half as much light</b> (one stop). If you move one, move another to compensate.</p>
+  <div class="scale">
+    <div class="row">
+      <div class="hd"><h3>Aperture · f/</h3><span class="tag">depth of field</span></div>
+      <div class="stops"><span class="hi">f/1.4</span><span>f/2</span><span>f/2.8</span><span>f/4</span><span>f/5.6</span><span>f/8</span><span>f/11</span><span>f/16</span></div>
+      <div class="ends"><span>Brighter · blurry background · portraits</span><span>Darker · everything sharp · landscapes</span></div>
+    </div>
+    <div class="row">
+      <div class="hd"><h3>Shutter speed</h3><span class="tag">motion</span></div>
+      <div class="stops"><span>1/4000</span><span>1/2000</span><span>1/1000</span><span>1/500</span><span>1/250</span><span>1/125</span><span>1/60</span><span class="hi">1/30</span></div>
+      <div class="ends"><span>Darker · freezes action</span><span>Brighter · motion blur, needs steady hands</span></div>
+    </div>
+    <div class="row">
+      <div class="hd"><h3>ISO</h3><span class="tag">grain</span></div>
+      <div class="stops"><span>100</span><span>200</span><span>400</span><span>800</span><span>1600</span><span>3200</span><span>6400</span><span class="hi">12800</span></div>
+      <div class="ends"><span>Cleanest · needs light</span><span>Brighter · more grain (fine up to ~6400 on a7 IV)</span></div>
+    </div>
+  </div>
+
+  <div class="lab" id="lab">
+    <div class="lab-head">
+      <h3>Exposure balancer</h3>
+      <p>Move any one setting. The setting you pick under <b>Auto-balance with</b> moves the opposite way, so the photo stays equally bright. The preview shows what changes in the picture.</p>
+    </div>
+    <div class="lab-body">
+      <div class="pv-col">
+        <div class="pv" aria-hidden="true">
+          <div class="pv-scene" id="pvScene">
+            <div class="pv-bg" id="pvBg">
+              <i class="bk" style="left:8%;top:14%;width:34px;height:34px;background:#ffd27a"></i>
+              <i class="bk" style="left:24%;top:30%;width:22px;height:22px;background:#ff9d6b"></i>
+              <i class="bk" style="left:70%;top:12%;width:40px;height:40px;background:#fff1b8"></i>
+              <i class="bk" style="left:84%;top:34%;width:26px;height:26px;background:#ffb86b"></i>
+              <i class="bk" style="left:55%;top:22%;width:18px;height:18px;background:#ffe39a"></i>
+              <i class="bld" style="left:4%;width:16%;height:46%"></i>
+              <i class="bld" style="left:22%;width:12%;height:60%"></i>
+              <i class="bld" style="left:64%;width:14%;height:52%"></i>
+              <i class="bld" style="left:80%;width:18%;height:40%"></i>
+            </div>
+            <div class="pv-ground"></div>
+            <div class="pv-ball" id="pvBall"></div>
+            <svg class="pv-person" viewBox="0 0 100 160"><circle cx="50" cy="32" r="22" fill="#2b2420"/><path d="M14 160 C14 96 30 64 50 64 C70 64 86 96 86 160 Z" fill="#3a2f29"/><circle cx="43" cy="30" r="2.6" fill="#f3e6d8"/><circle cx="57" cy="30" r="2.6" fill="#f3e6d8"/></svg>
+            <div class="pv-grain" id="pvGrain"></div>
+          </div>
+          <div class="pv-legend"><span>Background blur = aperture</span><span>Ball streak = shutter</span><span>Speckle = ISO</span></div>
+        </div>
+        <div class="meter" aria-label="Exposure meter">
+          <div class="meter-scale">
+            <span>−3</span><span>−2</span><span>−1</span><span class="z">0</span><span>+1</span><span>+2</span><span>+3</span>
+          </div>
+          <div class="meter-track"><div class="meter-needle" id="needle"></div></div>
+          <div class="meter-read"><span>Exposure meter</span><b id="meterVal">±0 stops · correct</b></div>
+        </div>
+      </div>
+
+      <div class="ctl-col">
+        <fieldset class="mode">
+          <legend>Auto-balance with</legend>
+          <label><input type="radio" name="comp" id="compSh" value="sh" checked> Shutter</label>
+          <label><input type="radio" name="comp" id="compAp" value="ap"> Aperture</label>
+          <label><input type="radio" name="comp" id="compIso" value="iso"> ISO</label>
+        </fieldset>
+
+        <div class="sl" data-k="ap">
+          <div class="sl-top"><label for="rAp">Aperture</label><output id="oAp">f/4</output></div>
+          <input type="range" id="rAp" min="0" max="8" step="1">
+          <div class="sl-ends"><span>f/1.4 · more light</span><span>f/22 · less light</span></div>
+        </div>
+        <div class="sl" data-k="sh">
+          <div class="sl-top"><label for="rSh">Shutter speed</label><output id="oSh">1/125</output></div>
+          <input type="range" id="rSh" min="0" max="18" step="1">
+          <div class="sl-ends"><span>1/8000 · less light</span><span>30″ · more light</span></div>
+        </div>
+        <div class="sl" data-k="iso">
+          <div class="sl-top"><label for="rIso">ISO</label><output id="oIso">400</output></div>
+          <input type="range" id="rIso" min="0" max="9" step="1">
+          <div class="sl-ends"><span>100 · less light</span><span>51200 · more light</span></div>
+        </div>
+
+        <div class="msg" id="msg" role="status" aria-live="polite"></div>
+        <ul class="warn" id="warn"></ul>
+
+        <div class="eq">
+          <div class="eq-h">Same brightness at ISO <span id="eqIso">400</span>. Tap one to use it</div>
+          <div class="eq-list" id="eqList"></div>
+        </div>
+
+        <div class="btns">
+          <span class="btns-l">Start from:</span>
+          <button type="button" data-p="5,4,0">Bright sun</button>
+          <button type="button" data-p="2,6,1">Cloudy / shade</button>
+          <button type="button" data-p="2,7,4">Indoor room</button>
+          <button type="button" data-p="1,7,6">Night street</button>
+          <button type="button" id="lock" class="alt">Set current as correct</button>
+        </div>
+      </div>
+    </div>
+    <div class="rules">
+      <div><b>1 stop</b> = double or half the light.</div>
+      <div><b>Aperture</b> one stop: f/2.8 ↔ f/4 ↔ f/5.6</div>
+      <div><b>Shutter</b> one stop: 1/250 ↔ 1/125 ↔ 1/60</div>
+      <div><b>ISO</b> one stop: 400 ↔ 800 ↔ 1600</div>
+      <div><b>Close aperture 2 stops</b> → slow shutter 2 stops <i>or</i> raise ISO 2 stops.</div>
+    </div>
+  </div>
+
+  <div class="grid" style="margin-top:14px">
+    <div class="card"><h3>Which mode?</h3>
+      <ul class="list">
+        <li><b>AUTO</b> — camera decides everything. Use it for your first day.</li>
+        <li><b>A</b> (aperture priority) — you pick f/, camera picks shutter. Best everyday mode.</li>
+        <li><b>S</b> (shutter priority) — you pick speed, camera picks f/. Sports, kids, waterfalls.</li>
+        <li><b>M</b> (manual) — you pick both. Add Auto ISO and it becomes easy.</li>
+      </ul>
+    </div>
+    <div class="card"><h3>Rules to remember</h3>
+      <ul class="list">
+        <li><b>Handheld:</b> shutter at least 1/(focal length). 50mm → 1/50 or faster. IBIS buys you 2–3 stops for still subjects.</li>
+        <li><b>Moving people:</b> 1/250 minimum. Running kids or sport: 1/1000.</li>
+        <li><b>Too bright or dark?</b> Turn the top-right dial (exposure comp) before touching anything else.</li>
+        <li><b>Check the histogram:</b> press <span class="kbd">DISP</span> until it shows. Avoid a pile-up hard against the right edge.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- RECIPES -->
+<section id="recipes">
+  <h2>Photo recipes <span class="k">starting points</span></h2>
+  <p class="lede">Dial these in, take a test shot, then adjust exposure compensation.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Situation</th><th>Mode</th><th>Aperture</th><th>Shutter</th><th>ISO</th><th>Focus / drive</th><th>Tip</th></tr></thead>
+    <tbody>
+      <tr><td><b>Portrait, blurred background</b></td><td class="n">A</td><td class="n">f/1.8–2.8</td><td class="n">1/250+</td><td class="n">Auto</td><td>AF-C · Eye AF Human</td><td>Step close, put distance between subject and background.</td></tr>
+      <tr><td><b>Group photo</b></td><td class="n">A</td><td class="n">f/5.6–8</td><td class="n">1/250</td><td class="n">Auto</td><td>AF-C · Wide · burst</td><td>Take 5–6 frames; someone always blinks.</td></tr>
+      <tr><td><b>Landscape, daylight</b></td><td class="n">A</td><td class="n">f/8–11</td><td class="n">auto</td><td class="n">100</td><td>AF-S · single shot</td><td>Focus a third into the scene. Use the grid.</td></tr>
+      <tr><td><b>Kids, pets, sports</b></td><td class="n">S or M</td><td class="n">f/2.8–4</td><td class="n">1/1000+</td><td class="n">Auto</td><td>AF-C · Tracking · Hi burst</td><td>Use AF-ON to focus with your thumb.</td></tr>
+      <tr><td><b>Birds, wildlife</b></td><td class="n">M</td><td class="n">wide open</td><td class="n">1/2000</td><td class="n">Auto</td><td>AF-C · Bird/Animal · Hi+</td><td>Set Subject Recog. to Bird.</td></tr>
+      <tr><td><b>Indoor / restaurant</b></td><td class="n">A</td><td class="n">f/1.8–2.8</td><td class="n">1/125</td><td class="n">Auto ≤12800</td><td>AF-C · Eye AF</td><td>Turn on Anti-flicker under tube/LED lights.</td></tr>
+      <tr><td><b>Wedding / function stage</b></td><td class="n">M</td><td class="n">f/2.8</td><td class="n">1/200</td><td class="n">Auto</td><td>AF-C · Tracking</td><td>Silent shutter only if lights don't flicker.</td></tr>
+      <tr><td><b>Food / product</b></td><td class="n">A</td><td class="n">f/4–5.6</td><td class="n">1/125</td><td class="n">Auto</td><td>AF-S · spot</td><td>Window light from the side; white card opposite.</td></tr>
+      <tr><td><b>Sunset</b></td><td class="n">A</td><td class="n">f/8</td><td class="n">auto</td><td class="n">100</td><td>AF-S</td><td>Exposure comp −0.7 to −1 for richer colour.</td></tr>
+      <tr><td><b>Night city (tripod)</b></td><td class="n">M</td><td class="n">f/8</td><td class="n">5–15 s</td><td class="n">100</td><td>MF · 2 s timer</td><td>Turn SteadyShot off on a tripod.</td></tr>
+      <tr><td><b>Night city (handheld)</b></td><td class="n">A</td><td class="n">f/1.8–2.8</td><td class="n">1/30</td><td class="n">Auto</td><td>AF-S</td><td>Brace against a wall; breathe out and press.</td></tr>
+      <tr><td><b>Stars / Milky Way</b></td><td class="n">M</td><td class="n">widest</td><td class="n">15–20 s</td><td class="n">3200–6400</td><td>MF on a bright star</td><td>Wide lens, no moon, far from city lights.</td></tr>
+      <tr><td><b>Silky waterfall</b></td><td class="n">S or M</td><td class="n">f/11–16</td><td class="n">½–2 s</td><td class="n">100</td><td>Tripod · timer</td><td>An ND filter lets you do this in daylight.</td></tr>
+      <tr><td><b>Fireworks / Diwali</b></td><td class="n">M</td><td class="n">f/8–11</td><td class="n">2–4 s / Bulb</td><td class="n">100</td><td>MF · tripod</td><td>Pre-focus on the first burst, then leave it.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- FOCUS -->
+<section id="focus">
+  <h2>Focus <span class="k">sharp every time</span></h2>
+  <div class="grid">
+    <div class="card"><h3>Focus mode</h3>
+      <div class="tbl" style="border:0"><table style="min-width:0">
+        <tbody>
+          <tr><td class="n"><b>AF-S</b></td><td>Focuses once and locks. Still subjects, landscapes.</td></tr>
+          <tr><td class="n"><b>AF-C</b></td><td>Keeps refocusing. People, pets, anything moving. <b>Default choice.</b></td></tr>
+          <tr><td class="n"><b>DMF</b></td><td>Autofocus, then fine-tune with the lens ring.</td></tr>
+          <tr><td class="n"><b>MF</b></td><td>Manual. Stars, fireworks, through glass.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="card"><h3>Focus area</h3>
+      <div class="tbl" style="border:0"><table style="min-width:0">
+        <tbody>
+          <tr><td class="n"><b>Wide</b></td><td>Camera picks. Works well with subject recognition.</td></tr>
+          <tr><td class="n"><b>Zone</b></td><td>You pick a region, camera picks within it.</td></tr>
+          <tr><td class="n"><b>Spot S/M/L</b></td><td>Exactly where you point with the joystick.</td></tr>
+          <tr><td class="n"><b>Tracking</b></td><td>Pick a subject, it follows them round the frame.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="card"><h3>Handy tricks</h3>
+      <ul class="list">
+        <li><b>Focus magnifier:</b> assign to a C button to zoom in and check manual focus.</li>
+        <li><b>Peaking:</b> <span class="path">Focus → Peaking Display</span> outlines what's sharp in colour when focusing manually.</li>
+        <li><b>Touch focus:</b> tap the screen to pick a subject; it tracks from there.</li>
+        <li><b>Back-button focus:</b> set <span class="path">AF w/ Shutter</span> to Off, then focus with <span class="kbd">AF-ON</span> only.</li>
+        <li><b>Video:</b> turn on <span class="path">Breathing Compensation</span> so the frame doesn't "zoom" while focus shifts.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- WB -->
+<section id="wb">
+  <h2>Colour &amp; white balance <span class="k">kelvin</span></h2>
+  <p class="lede">Auto white balance is good. Set it manually when skin looks orange or blue, or to keep colour consistent across a video.</p>
+  <div class="grid">
+    <div class="tbl"><table style="min-width:0">
+      <thead><tr><th>Light source</th><th>Kelvin</th></tr></thead>
+      <tbody>
+        <tr><td>Candle, diya</td><td class="n">1900 K</td></tr>
+        <tr><td>Warm household bulb</td><td class="n">2700–3200 K</td></tr>
+        <tr><td>Sunrise / sunset</td><td class="n">3500 K</td></tr>
+        <tr><td>White tube light / cool LED</td><td class="n">4000–4500 K</td></tr>
+        <tr><td>Midday sun</td><td class="n">5200–5600 K</td></tr>
+        <tr><td>Cloudy</td><td class="n">6000–6500 K</td></tr>
+        <tr><td>Shade</td><td class="n">7000–7500 K</td></tr>
+      </tbody>
+    </table></div>
+    <div class="card"><h3>Looks &amp; profiles</h3>
+      <ul class="list">
+        <li><b>Creative Look</b> (<span class="path">Exposure/Color → Color/Tone</span>): ST standard, PT portrait, VV / VV2 vivid, FL film, IN matte, SH soft, BW black &amp; white.</li>
+        <li><b>S-Cinetone</b> (Picture Profile PP11): cinematic video colour straight out of camera. No editing needed.</li>
+        <li><b>S-Log3</b> (PP8/PP9): flat, for colour grading. Expose +1 to +1.7 brighter than normal and always edit it.</li>
+        <li><b>Custom WB:</b> fill the frame with a white paper under your light and set Custom 1 for perfect colour.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section id="video">
+  <h2>Video <span class="k">PAL · 25/50</span></h2>
+  <p class="lede">The shutter-speed rule for natural motion: shutter ≈ 1 ÷ (2 × frame rate). In India always stay on multiples of 50.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Use</th><th>Resolution / fps</th><th>Shutter</th><th>Codec</th><th>Profile</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><b>Everyday, family, YouTube</b></td><td class="n">4K 25p</td><td class="n">1/50</td><td class="n">XAVC S 4K</td><td>S-Cinetone or Off</td><td>Full-width 7K oversampled — the sharpest mode.</td></tr>
+      <tr><td><b>Smooth motion</b></td><td class="n">4K 50p</td><td class="n">1/100</td><td class="n">XAVC HS 4K</td><td>S-Cinetone</td><td>Crops 1.5× (Super 35). Your lens looks tighter.</td></tr>
+      <tr><td><b>Slow motion 2×</b></td><td class="n">4K 50p → 25p</td><td class="n">1/100</td><td class="n">XAVC HS 4K</td><td>any</td><td>Or use S&amp;Q mode for in-camera slow-mo.</td></tr>
+      <tr><td><b>Slow motion 4×</b></td><td class="n">FHD 100p</td><td class="n">1/200</td><td class="n">XAVC S HD</td><td>any</td><td>S&amp;Q mode plays it back slowed on the card.</td></tr>
+      <tr><td><b>Grading work</b></td><td class="n">4K 25p 10-bit 4:2:2</td><td class="n">1/50</td><td class="n">XAVC S-I 4K</td><td>S-Log3</td><td>Large files; needs CFexpress or V90 SD.</td></tr>
+      <tr><td><b>Vlogging (handheld walk)</b></td><td class="n">4K 25p</td><td class="n">1/50</td><td class="n">XAVC S 4K</td><td>S-Cinetone</td><td>SteadyShot: Active (1.1× crop). Flip screen out.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid" style="margin-top:14px">
+    <div class="card"><h3>Exposure in bright sun</h3>
+      <p style="margin:0">At 1/50 outdoors you can't close the aperture enough without losing the blurry background. Use a <b>variable ND filter</b> (ND2–ND400) to keep 1/50 at f/2.8.</p>
+    </div>
+    <div class="card"><h3>Audio</h3>
+      <ul class="list">
+        <li>Built-in mic is only for reference; use a shotgun or wireless mic in the Multi-Interface shoe or mic jack.</li>
+        <li><span class="path">Shooting → Audio Recording → Audio Rec Level</span>: peaks around −12 dB.</li>
+        <li>Plug headphones in to monitor; turn on <span class="path">Wind Noise Reduct.</span> outdoors.</li>
+      </ul>
+    </div>
+    <div class="card"><h3>Checks before you press record</h3>
+      <ul class="list">
+        <li>Switch set to <b>Movie</b>, mode <b>M</b> or <b>S</b>.</li>
+        <li>Shutter on 1/50 or 1/100, WB set manually.</li>
+        <li>Zebras on at 70 (skin) or 100+ (highlights): <span class="path">Exposure/Color → Zebra Display</span>.</li>
+        <li>Plenty of card space and battery. Recording can run long in 4K 25p.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FLICKER -->
+<section id="flicker">
+  <h2>Stop flicker &amp; banding <span class="k">50 Hz mains</span></h2>
+  <p class="lede">Indoor LED and tube lights pulse 100 times a second. Match your shutter speed to it.</p>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th>Use</th><th>Avoid</th></tr></thead>
+    <tbody>
+      <tr><td><b>Video frame rate</b></td><td class="ok">25p · 50p · 100p (PAL)</td><td class="no">24p · 30p · 60p · 120p (NTSC)</td></tr>
+      <tr><td><b>Video shutter</b></td><td class="ok">1/50 · 1/100 · 1/200</td><td class="no">1/60 · 1/125 · 1/250</td></tr>
+      <tr><td><b>Photo shutter type</b></td><td class="ok">Mechanical shutter</td><td class="no">Silent / electronic shutter under LEDs</td></tr>
+      <tr><td><b>Photo setting</b></td><td class="ok">Anti-flicker Shoot. → On</td><td class="no">Leaving it off indoors</td></tr>
+      <tr><td><b>Bands still there?</b></td><td class="ok">Variable Shutter: fine-tune shutter until bands stop moving</td><td class="no">Cheap LED bulbs; switch them off if you can</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout"><p><b>Variable Shutter:</b> in Movie mode, <span class="path">Exposure/Color → Exposure → Variable Shutter</span> lets you adjust shutter in tiny steps. Useful for TV screens, LED walls and stage lights at functions.</p></div>
+</section>
+
+<!-- MENUS -->
+<section id="menus">
+  <h2>Menu paths <span class="k">find it fast</span></h2>
+  <p class="lede">Or press <span class="kbd">MENU</span>, go to <b>My Menu</b> and add the items you use most.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>I want to…</th><th>Go to</th></tr></thead>
+    <tbody>
+      <tr><td>Format the card</td><td><span class="path">Main → Format</span></td></tr>
+      <tr><td>Silent shooting</td><td><span class="path">Shooting → Shutter/Silent → Silent Mode</span></td></tr>
+      <tr><td>Anti-flicker for photos</td><td><span class="path">Shooting → Shutter/Silent → Anti-flicker Shoot.</span></td></tr>
+      <tr><td>Change burst speed</td><td>Drive button (left edge of the wheel) → Cont. Shooting Hi+ / Hi / Mid / Lo</td></tr>
+      <tr><td>Self-timer</td><td>Drive button → Self-timer 2 s / 5 s / 10 s</td></tr>
+      <tr><td>APS-C crop (extra reach)</td><td><span class="path">Shooting → Image Quality → APS-C S35 / Full Frame</span></td></tr>
+      <tr><td>Video format &amp; frame rate</td><td><span class="path">Shooting → Image Quality → File Format / Movie Settings</span></td></tr>
+      <tr><td>Picture profile / S-Cinetone</td><td><span class="path">Exposure/Color → Color/Tone → Picture Profile</span></td></tr>
+      <tr><td>Zebras</td><td><span class="path">Exposure/Color → Zebra Display</span></td></tr>
+      <tr><td>Subject recognition target</td><td><span class="path">Focus → Subject Recognition → Recognition Target</span></td></tr>
+      <tr><td>Reassign buttons</td><td><span class="path">Setup → Operation Customize → Custom Key/Dial Set.</span> (separate for photo and video)</td></tr>
+      <tr><td>Edit the Fn menu</td><td><span class="path">Setup → Operation Customize → Fn Menu Settings</span></td></tr>
+      <tr><td>Save a whole setup to the dial</td><td><span class="path">Shooting → Shoot. Mode → Camera Set. Memory</span> → slot 1/2/3</td></tr>
+      <tr><td>Pair with phone</td><td><span class="path">Network → Smartphone Connect</span> + Sony Creators' App</td></tr>
+      <tr><td>Clean the sensor</td><td><span class="path">Setup → Setup Option → Cleaning Mode</span></td></tr>
+      <tr><td>Firmware version</td><td><span class="path">Setup → Setup Option → Version</span></td></tr>
+      <tr><td>Reset everything</td><td><span class="path">Setup → Reset/Save Settings → Setting Reset</span></td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout"><p><b>Suggested custom buttons:</b> C1 = White Balance · C2 = Focus Mode · C3 = Focus Magnifier · C4 = Subject Recognition target · AF-ON = back-button focus.</p></div>
+</section>
+
+<!-- TROUBLESHOOT -->
+<section id="fix">
+  <h2>Troubleshooting <span class="k">quick fixes</span></h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Problem</th><th>Likely cause</th><th>Fix</th></tr></thead>
+    <tbody>
+      <tr><td><b>Photos blurry</b></td><td>Shutter too slow, or focused on the wrong thing</td><td>Faster shutter (1/250 for people). Check the green focus box is on the subject.</td></tr>
+      <tr><td><b>Whole photo too dark / bright</b></td><td>Metering fooled by a bright or dark scene</td><td>Turn the exposure compensation dial. Check the histogram.</td></tr>
+      <tr><td><b>Grainy photos</b></td><td>ISO very high</td><td>Add light, use a wider aperture (lower f/), or accept a slower shutter.</td></tr>
+      <tr><td><b>Dark bands across photo</b></td><td>Electronic shutter under LED lights</td><td>Turn Silent Mode off, turn Anti-flicker on.</td></tr>
+      <tr><td><b>Video flickers</b></td><td>NTSC frame rate or wrong shutter</td><td>PAL, 25p/50p, shutter 1/50 or 1/100. See Flicker.</td></tr>
+      <tr><td><b>Shutter won't fire</b></td><td>No card, AF-S can't focus, or buffer full</td><td>Insert card, switch to AF-C or MF, wait for the card-write light.</td></tr>
+      <tr><td><b>Can't change aperture</b></td><td>Wrong mode, or lens has an aperture ring not on A</td><td>Use A or M. Set the lens ring to "A".</td></tr>
+      <tr><td><b>Screen goes black at your eye</b></td><td>Eye sensor switching to viewfinder</td><td>Normal. To lock the screen: <span class="path">Setup → Finder/Monitor → Sel. Finder/Monitor → Monitor</span>.</td></tr>
+      <tr><td><b>Viewfinder looks blurry</b></td><td>Dioptre wheel set for someone else</td><td>Turn the small wheel beside the EVF until the text is crisp.</td></tr>
+      <tr><td><b>Overheat icon</b></td><td>Long 4K recording in heat</td><td><span class="path">Setup → Power Setting Option → Auto Power OFF Temp.</span> → High. Flip the screen out, keep out of direct sun.</td></tr>
+      <tr><td><b>Battery drains fast</b></td><td>Wi-Fi/Bluetooth, bright screen, IBIS on tripod</td><td>Airplane mode on when not transferring. Carry a spare NP-FZ100.</td></tr>
+      <tr><td><b>Recording stops by itself</b></td><td>Card too slow</td><td>Use V60/V90 SD or CFexpress Type A for 4K 50p / S-I.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- CARE -->
+<section id="care">
+  <h2>Battery, cards &amp; care</h2>
+  <div class="grid">
+    <div class="card"><h3>Battery</h3>
+      <ul class="list">
+        <li>NP-FZ100: roughly 520 shots (viewfinder) / 580 (screen), or around 1.5–2 hours of video.</li>
+        <li>Charges in-camera over USB-C; a USB-PD phone charger is fastest.</li>
+        <li>Can run from a power bank while filming long events.</li>
+        <li>Buy genuine Sony or reputable brands. Cheap copies swell and report wrong charge.</li>
+      </ul>
+    </div>
+    <div class="card"><h3>Memory cards</h3>
+      <ul class="list">
+        <li><b>Photos + 4K 25p:</b> SD UHS-II V60 is plenty.</li>
+        <li><b>4K 50p, S-I, long bursts:</b> V90 SD or CFexpress Type A (slot 1 only).</li>
+        <li>Record to both slots for weddings: <span class="path">Shooting → Media → Rec. Media Settings → Simult. Rec</span>.</li>
+        <li>Copy files off and format in-camera before every big shoot.</li>
+      </ul>
+    </div>
+    <div class="card"><h3>Care in Indian weather</h3>
+      <ul class="list">
+        <li><b>Monsoon:</b> keep the camera and lenses in a dry box or airtight box with silica gel packets to prevent fungus.</li>
+        <li><b>AC to humid outside:</b> leave the camera in its bag for 15–20 min so the lens doesn't fog.</li>
+        <li><b>Dust:</b> change lenses facing down, quickly, out of the wind. Use a blower before a brush.</li>
+        <li>Never leave it in a hot car.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Menu names follow the a7 IV's current firmware menu layout; wording may differ slightly on older firmware. Battery and card figures are typical, not guaranteed.
+</footer>
+</div>
+
+<script>
+(function(){
+  var AP=["1.4","2","2.8","4","5.6","8","11","16","22"];
+  var SH=["1/8000","1/4000","1/2000","1/1000","1/500","1/250","1/125","1/60","1/30","1/15","1/8","1/4","1/2","1″","2″","4″","8″","15″","30″"];
+  var SHS=[1/8000,1/4000,1/2000,1/1000,1/500,1/250,1/125,1/60,1/30,1/15,1/8,1/4,1/2,1,2,4,8,15,30];
+  var ISO=[100,200,400,800,1600,3200,6400,12800,25600,51200];
+  var MAX={ap:8,sh:18,iso:9};
+  var NAME={ap:"Aperture",sh:"Shutter",iso:"ISO"};
+  var s={ap:3,sh:6,iso:2}; // f/4 1/125 ISO400
+  var target=0, comp="sh";
+  var $=function(id){return document.getElementById(id)};
+  var r={ap:$("rAp"),sh:$("rSh"),iso:$("rIso")}, o={ap:$("oAp"),sh:$("oSh"),iso:$("oIso")};
+
+  function light(x){return -x.ap + x.sh + x.iso;}
+  function fmt(k,i){return k==="ap"?"f/"+AP[i]:k==="sh"?SH[i]:"ISO "+ISO[i];}
+  function stops(n){n=Math.abs(n);return n+" stop"+(n===1?"":"s");}
+  function clamp(v,k){return Math.max(0,Math.min(MAX[k],v));}
+  function dirWord(k,d){ // d = change in light contributed (+ = more light)
+    if(k==="ap") return d>0?"opened":"closed down";
+    if(k==="sh") return d>0?"slowed":"sped up";
+    return d>0?"raised":"lowered";
+  }
+  function contrib(k,delta){return k==="ap"?-delta:delta;}
+
+  target=light(s);
+
+  function flash(k){
+    var el=r[k].closest(".sl"); el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
+    setTimeout(function(){el.classList.remove("flash")},700);
+  }
+
+  function change(k,v){
+    var before={ap:s.ap,sh:s.sh,iso:s.iso};
+    s[k]=v;
+    var msg="";
+    var d=contrib(k,v-before[k]);
+    if(d===0){render("");return;}
+    var first="<b>"+NAME[k]+"</b> "+fmt(k,before[k])+" → "+fmt(k,v)+": "+stops(d)+" "+(d>0?"more":"less")+" light.";
+    if(k===comp){
+      var off=light(s)-target;
+      msg=first+" This is the auto-balance setting, so nothing else moved. The photo is now "+(off===0?"back to correct.":stops(off)+" "+(off>0?"brighter":"darker")+". Press <b>Set current as correct</b> if you want this brightness.");
+    } else {
+      var want;
+      if(comp==="sh") want=target + s.ap - s.iso;
+      else if(comp==="iso") want=target + s.ap - s.sh;
+      else want=s.sh + s.iso - target;
+      var got=clamp(want,comp);
+      var from=s[comp]; s[comp]=got;
+      var cd=contrib(comp,got-from);
+      msg=first;
+      if(cd!==0){
+        msg+=" To compensate, <b>"+NAME[comp]+"</b> "+dirWord(comp,cd)+" "+fmt(comp,from)+" → "+fmt(comp,got)+" ("+stops(cd)+" "+(cd>0?"more":"less")+" light).";
+        flash(comp);
+      }
+      var off=light(s)-target;
+      if(off!==0){
+        var other=["ap","sh","iso"].filter(function(x){return x!==k&&x!==comp})[0];
+        msg+=" <b>"+NAME[comp]+" hit its limit</b>, so the photo is "+stops(off)+" "+(off>0?"too bright":"too dark")+". Also change <b>"+NAME[other]+"</b> by "+stops(off)+(other==="ap"?(off>0?" (close the aperture)":" (open the aperture)"):other==="sh"?(off>0?" (faster shutter)":" (slower shutter)"):(off>0?" (lower ISO)":" (higher ISO)"))+".";
+      } else if(cd!==0){
+        msg+=" Brightness stays the same.";
+      }
+    }
+    render(msg);
+  }
+
+  function render(msg){
+    ["ap","sh","iso"].forEach(function(k){
+      r[k].value=s[k]; o[k].textContent=k==="iso"?ISO[s.iso]:fmt(k,s[k]);
+      r[k].closest(".sl").classList.toggle("auto",k===comp);
+    });
+    var off=light(s)-target;
+    var pos=Math.max(-3,Math.min(3,off));
+    $("needle").style.left=(50+pos*100/6)+"%";
+    var mv=$("meterVal");
+    mv.textContent=off===0?"±0 stops · correct":(off>0?"+":"−")+Math.abs(off)+" stop"+(Math.abs(off)===1?"":"s")+" · "+(off>0?"too bright":"too dark")+(Math.abs(off)>3?" (off scale)":"");
+    mv.classList.toggle("off",off!==0);
+    if(msg!==undefined) $("msg").innerHTML=msg||$("msg").innerHTML;
+
+    // preview
+    var blur=Math.max(0,(6-s.ap))*1.3;
+    $("pvBg").style.filter="blur("+blur.toFixed(1)+"px)";
+    var sec=SHS[s.sh];
+    var trail=Math.min(300,Math.round(sec*900));
+    $("pvBall").style.width=(18+trail)+"px";
+    $("pvGrain").style.opacity=Math.min(.95,Math.max(0,(s.iso-1)*0.11)).toFixed(2);
+    var bright=Math.pow(2,Math.max(-3,Math.min(3,off))*0.55);
+    var shake=sec>=1/8?Math.min(3,Math.log2(sec*8)+1)*0.8:0;
+    $("pvScene").style.filter="brightness("+bright.toFixed(2)+")"+(shake?" blur("+shake.toFixed(1)+"px)":"");
+
+    // warnings
+    var w=[];
+    if(sec>=1/30) w.push(["w","Tripod or very steady hands needed"]);
+    else if(sec>1/125) w.push(["w","Moving people may blur"]);
+    else if(sec<=1/1000) w.push(["g","Freezes fast action"]);
+    if(s.ap<=1) w.push(["w","Very thin focus: only the eyes sharp"]);
+    else if(s.ap<=2) w.push(["g","Blurry background"]);
+    else if(s.ap>=4&&s.ap<=6) w.push(["g","Front to back sharp"]);
+    else if(s.ap>=7) w.push(["w","Diffraction: slightly softer detail"]);
+    if(s.iso>=8) w.push(["w","Heavy grain, duller colours"]);
+    else if(s.iso>=6) w.push(["w","Visible grain"]);
+    else if(s.iso<=1) w.push(["g","Clean, no grain"]);
+    $("warn").innerHTML=w.map(function(x){return '<li class="'+x[0]+'">'+x[1]+'</li>'}).join("");
+
+    // equivalents at current ISO
+    $("eqIso").textContent=ISO[s.iso];
+    var h="";
+    for(var a=0;a<=8;a++){
+      var sh=target + a - s.iso;
+      if(sh<0||sh>18) continue;
+      var cur=(a===s.ap&&sh===s.sh);
+      h+='<button type="button" data-a="'+a+'" data-s="'+sh+'"'+(cur?' class="cur" aria-current="true"':'')+'>f/'+AP[a]+' · '+SH[sh]+'</button>';
+    }
+    $("eqList").innerHTML=h||'<span class="btns-l">No combination fits at this ISO. Change ISO.</span>';
+  }
+
+  ["ap","sh","iso"].forEach(function(k){
+    r[k].addEventListener("input",function(){change(k,+r[k].value)});
+  });
+  document.querySelectorAll('input[name="comp"]').forEach(function(el){
+    el.addEventListener("change",function(){comp=el.value;render("Now <b>"+NAME[comp]+"</b> will move automatically when you change either of the other two.");});
+  });
+  $("eqList").addEventListener("click",function(e){
+    var b=e.target.closest("button"); if(!b) return;
+    s.ap=+b.dataset.a; s.sh=+b.dataset.s;
+    render("Using <b>f/"+AP[s.ap]+" at "+SH[s.sh]+"</b>. Same brightness, different look: compare the background blur and the ball streak.");
+  });
+  document.querySelectorAll(".btns button[data-p]").forEach(function(b){
+    b.addEventListener("click",function(){
+      var p=b.dataset.p.split(",").map(Number);
+      s.ap=p[0]; s.sh=p[1]; s.iso=p[2]; target=light(s);
+      render("<b>"+b.textContent+"</b> starting point: "+fmt("ap",s.ap)+", "+SH[s.sh]+", ISO "+ISO[s.iso]+". This is the correct exposure. Now move a slider.");
+    });
+  });
+  $("lock").addEventListener("click",function(){
+    target=light(s);
+    render("Saved. <b>"+fmt("ap",s.ap)+", "+SH[s.sh]+", ISO "+ISO[s.iso]+"</b> is now the correct exposure.");
+  });
+
+  render("Example: close the aperture from f/4 to f/8. That's 2 stops less light, so the shutter slows from 1/125 to 1/30 to keep the photo equally bright.");
+})();
+</script>
+</body>
+</html>
